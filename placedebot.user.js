@@ -254,8 +254,9 @@ async function place(x, y, color) {
 	});
 	const data = await response.json()
 	if (data.errors != undefined) {
+        console.log(data.errors);
 		Toastify({
-			text: 'Fehler beim Platzieren des Pixels, warte auf Abkühlzeit...',
+			text: 'Fehler beim Platzieren des Pixels, warte auf Abkühlzeit...'+data.errors,
 			duration: 10000
 		}).showToast();
 		return data.errors[0].extensions?.nextAvailablePixelTs
