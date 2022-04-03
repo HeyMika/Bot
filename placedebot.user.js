@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         PlaceCyubeVR Bot
-// @namespace    https://github.com/HeyMika/pixel
-// @version      16
+// @namespace    https://github.com/HeyMika/Bot
+// @version      2
 // @description  cyubeVR Pixel Bot
 // @author       -
 // @match        https://www.reddit.com/r/place/*
@@ -21,7 +21,7 @@ var placeOrders = [];
 var accessToken;
 var canvas = document.createElement('canvas');
 
-const VERSION = 16
+const VERSION = 17
 var UPDATE_PENDING = false;
 
 const COLOR_MAPPINGS = {
@@ -174,14 +174,25 @@ function updateOrders() {
 			}).showToast();
 		}
 
-		
+		if (data?.version !== VERSION && !UPDATE_PENDING) {
+			UPDATE_PENDING = true
+			Toastify({
+				text: `NEUE VERSION VERFÜGBAR! Aktualisiere hier https://github.com/HeyMika/Bot/raw/main/placedebot.user.js`,
+				duration: -1,
+				onClick: () => {
+					// Tapermonkey captures this and opens a new tab
+					window.location = 'https://github.com/HeyMika/Bot/raw/main/placedebot.user.js'
+				}
+			}).showToast();
+
+		}
 		placeOrders = data;
 	}).catch((e) => console.warn('Bestellungen können nicht geladen werden!', e));
 }
 
 
 function getCanvasId(x,y) {
-	return (x <1000) + (y<1000)*2
+	return (x > 1000) + (y > 1000)*2
 }
 /**
  * Places a pixel on the canvas, returns the "nextAvailablePixelTimestamp", if succesfull
@@ -342,4 +353,4 @@ function getCanvasFromUrl(url, canvas, x = 0, y = 0) {
 
 function rgbToHex(r, g, b) {
 	return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase();
-}
+	}
