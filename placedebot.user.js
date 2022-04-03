@@ -1,16 +1,16 @@
 // ==UserScript==
-// @name         PlaceDE Bot
-// @namespace    https://github.com/PlaceDE/Bot
-// @version      17
-// @description  /r/place bot
-// @author       NoahvdAa, reckter, SgtChrome, nama17
+// @name         PlaceCyubeVR Bot
+// @namespace    https://github.com/HeyMika/pixel
+// @version      16
+// @description  cyubeVR Pixel Bot
+// @author       -
 // @match        https://www.reddit.com/r/place/*
 // @match        https://new.reddit.com/r/place/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=reddit.com
 // @require	     https://cdn.jsdelivr.net/npm/toastify-js
 // @resource     TOASTIFY_CSS https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css
-// @updateURL    https://github.com/PlaceDE/Bot/raw/main/placedebot.user.js
-// @downloadURL  https://github.com/PlaceDE/Bot/raw/main/placedebot.user.js
+// @updateURL    https://github.com/HeyMika/Bot/raw/main/placedebot.user.js
+// @downloadURL  https://github.com/HeyMika/Bot/raw/main/placedebot.user.js
 // @grant        GM_getResourceText
 // @grant        GM_addStyle
 // ==/UserScript==
@@ -21,7 +21,7 @@ var placeOrders = [];
 var accessToken;
 var canvas = document.createElement('canvas');
 
-const VERSION = 17
+const VERSION = 16
 var UPDATE_PENDING = false;
 
 const COLOR_MAPPINGS = {
@@ -158,7 +158,7 @@ async function attemptPlace() {
 }
 
 function updateOrders() {
-	fetch(`https://placede.github.io/pixel/pixel.json`, {cache: "no-store"}).then(async (response) => {
+	fetch(`https://raw.githubusercontent.com/HeyMika/pixel/main/pixel.json`, {cache: "no-store"}).then(async (response) => {
 		if (!response.ok) return console.warn('Bestellungen können nicht geladen werden!');
 		const data = await response.json();
 
@@ -174,25 +174,14 @@ function updateOrders() {
 			}).showToast();
 		}
 
-		if (data?.version !== VERSION && !UPDATE_PENDING) {
-			UPDATE_PENDING = true
-			Toastify({
-				text: `NEUE VERSION VERFÜGBAR! Aktualisiere hier https://github.com/placeDE/Bot/raw/main/placedebot.user.js`,
-				duration: -1,
-				onClick: () => {
-					// Tapermonkey captures this and opens a new tab
-					window.location = 'https://github.com/placeDE/Bot/raw/main/placedebot.user.js'
-				}
-			}).showToast();
-
-		}
+		
 		placeOrders = data;
 	}).catch((e) => console.warn('Bestellungen können nicht geladen werden!', e));
 }
 
 
 function getCanvasId(x,y) {
-	return (x > 1000) + (y > 1000)*2
+	return (x <1000) + (y<1000)*2
 }
 /**
  * Places a pixel on the canvas, returns the "nextAvailablePixelTimestamp", if succesfull
