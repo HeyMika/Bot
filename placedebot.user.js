@@ -178,7 +178,7 @@ function updateOrders() {
 			UPDATE_PENDING = true
 			Toastify({
 				text: `NEUE VERSION VERFÜGBAR! Aktualisiere hier https://github.com/HeyMika/Bot/raw/main/placedebot.user.js`,
-				duration: -1,
+				duration: 1,
 				onClick: () => {
 					// Tapermonkey captures this and opens a new tab
 					window.location = 'https://github.com/HeyMika/Bot/raw/main/placedebot.user.js'
